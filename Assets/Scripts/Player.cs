@@ -5,8 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Atributos")]
-    public float speed;
-    public int step;
+    public float speed = 7.5f;
+    public float step = 1f;
 
     [Header("Flags")]
     public bool isWalking = false;
@@ -54,25 +54,25 @@ public class Player : MonoBehaviour
         {
             if (validDirections["left"] && Input.GetKey(KeyCode.A))
             {
-                direction = Vector3.left;
+                direction = Vector3.left * step;
                 isWalking = true;
                 Debug.Log("left");
             }
             else if (validDirections["right"] && Input.GetKey(KeyCode.D))
             {
-                direction = Vector3.right;
+                direction = Vector3.right * step;
                 isWalking = true;
                 Debug.Log("right");
             }
             else if (validDirections["up"] && Input.GetKey(KeyCode.W))
             {
-                direction = Vector3.up;
+                direction = Vector3.up * step;
                 isWalking = true;
                 Debug.Log("up");
             }
             else if (validDirections["down"] && Input.GetKey(KeyCode.S))
             {
-                direction = Vector3.down;
+                direction = Vector3.down * step;
                 isWalking = true;
                 Debug.Log("down");
             }
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         while(i < 1f) {
             i += Time.deltaTime * speed;
             transform.position = Vector3.Lerp(startPosition, endPosition, i);
-            Debug.Log(i);
+            //Debug.Log(i);
             yield return null;
         }
         isWalking = false;
