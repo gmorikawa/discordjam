@@ -48,38 +48,9 @@ public class Player : MonoBehaviour
         //direction.y = (validDirections["down"] && Input.GetKeyDown(KeyCode.S) ? -1f : 0f)
         //            + (validDirections["up"] && Input.GetKeyDown(KeyCode.W) ? 1f : 0f);
 
-        //transform.position += direction;// * speed * Time.deltaTime;
-
         if (!isWalking)
         {
-            if (validDirections["left"] && Input.GetKey(KeyCode.A))
-            {
-                direction = Vector3.left * step;
-                isWalking = true;
-                Debug.Log("left");
-            }
-            else if (validDirections["right"] && Input.GetKey(KeyCode.D))
-            {
-                direction = Vector3.right * step;
-                isWalking = true;
-                Debug.Log("right");
-            }
-            else if (validDirections["up"] && Input.GetKey(KeyCode.W))
-            {
-                direction = Vector3.up * step;
-                isWalking = true;
-                Debug.Log("up");
-            }
-            else if (validDirections["down"] && Input.GetKey(KeyCode.S))
-            {
-                direction = Vector3.down * step;
-                isWalking = true;
-                Debug.Log("down");
-            }
-            else
-            {
-                direction = Vector3.zero;
-            }
+            VerifyWalkingInput();
 
             endPoint = transform.position + direction;
             if (isWalking)
@@ -93,7 +64,6 @@ public class Player : MonoBehaviour
         while(i < 1f) {
             i += Time.deltaTime * speed;
             transform.position = Vector3.Lerp(startPosition, endPosition, i);
-            //Debug.Log(i);
             yield return null;
         }
         isWalking = false;
@@ -108,24 +78,69 @@ public class Player : MonoBehaviour
         validDirections.Add("down", true);
     }
 
+    /// <summary>
+    /// Dispara raycasts para as quatro direções
+    /// </summary>
     void RaycastAtDirections()
     {
         RaycastHit2D hit;
 
-        hit = Physics2D.Raycast(transform.position, Vector2.right, 1f, LayerMask.GetMask("Parede"));
+        hit = Physics2D.Raycast(transform.position, Vector2.right, step, LayerMask.GetMask("Parede"));
         validDirections["right"] = hit.collider == null;
         if (hit.collider != null) Debug.Log("Parede: right");
 
-        hit = Physics2D.Raycast(transform.position, Vector2.left, 1f, LayerMask.GetMask("Parede"));
+        hit = Physics2D.Raycast(transform.position, Vector2.left, step, LayerMask.GetMask("Parede"));
         validDirections["left"] = hit.collider == null;
         if (hit.collider != null) Debug.Log("Parede: left");
 
-        hit = Physics2D.Raycast(transform.position, Vector2.up, 1f, LayerMask.GetMask("Parede"));
+        hit = Physics2D.Raycast(transform.position, Vector2.up, step, LayerMask.GetMask("Parede"));
         validDirections["up"] = hit.collider == null;
         if (hit.collider != null) Debug.Log("Parede: up");
 
-        hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Parede"));
+        hit = Physics2D.Raycast(transform.position, Vector2.down, step, LayerMask.GetMask("Parede"));
         validDirections["down"] = hit.collider == null;
         if (hit.collider != null) Debug.Log("Parede: down");
+    }
+
+    /// <summary>
+    /// Verifica a entrada das teclas
+    /// </summary>
+    void VerifyWalkingInput()
+    {
+        if (validDirections["left"] && Input.GetKey(KeyCode.A))
+        {
+            direction = Vector3.left * step;
+            isWalking = true;
+            Debug.Log("left");
+        }
+        else if (validDirections["right"] && Input.GetKey(KeyCode.D))
+        {
+            direction = Vector3.right * step;
+            isWalking = true;
+            Debug.Log("right");
+        }
+        else if (validDirections["up"] && Input.GetKey(KeyCode.W))
+        {
+            direction = Vector3.up * step;
+            isWalking = true;
+            Debug.Log("up");
+        }
+        else if (validDirections["down"] && Input.GetKey(KeyCode.S))
+        {
+            direction = Vector3.down * step;
+            isWalking = true;
+            Debug.Log("down");
+        }
+        else
+        {
+            direction = Vector3.zero;
+        }
+
+        animator.SetBool("isWalking", isWalking);
+        if(direction != Vector3.zero)
+        {
+            animator.SetFloat("dirX", direction.x);
+            animator.SetFloat("dirY", direction.y);
+        }
     }
 }
