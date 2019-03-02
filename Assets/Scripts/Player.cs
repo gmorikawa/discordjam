@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
 
     [Header("Flags")]
     public bool isWalking = false;
+    public bool isDead = false;
 
     private Dictionary<string, bool> validDirections;
     private Vector3 direction;
+    private Vector3 facing;
     private Vector3 endPoint;
 
     /* Components */
@@ -21,11 +23,20 @@ public class Player : MonoBehaviour
     private new Rigidbody2D rigidbody;
     private new BoxCollider2D collider;
 
+    public Item[] items = new Item[2];
+
     private Coroutine walkingRoutine;
+
+    void Awake()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        gameObject.tag = "Player";
+    }
 
     void Start()
     {
         direction = new Vector3();
+        facing = Vector3.down;
 
         animator = GetComponent<Animator>();
         renderer = GetComponent<Renderer>();
@@ -39,18 +50,39 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        RaycastAtDirections();
-
-        if (!isWalking)
+        if(!isDead)
         {
-            VerifyWalkingInput();
+            RaycastAtDirections();
 
-            endPoint = transform.position + direction;
-            if (isWalking)
-                walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
-        } else
-        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                InteractWith();
+            }
+
+            if (!isWalking)
+            {
+                VerifyWalkingInput();
+
+                endPoint = transform.position + direction;
+                if (isWalking)
+                    walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
+            }
         }
+    }
+
+    public void SetGameOver()
+    {
+        isDead = true;
+        StartCoroutine(Dying());
+    }
+
+    IEnumerator Dying()
+    {
+        yield return null;
+        ///
+        /// Lógica para player morrendo
+        ///
+        Destroy(gameObject);
     }
 
     IEnumerator<float> Movement(Vector3 startPosition, Vector3 endPosition)
@@ -62,6 +94,14 @@ public class Player : MonoBehaviour
             yield return i;
         }
         isWalking = false;
+    }
+
+    void InteractWith() {
+        RaycastHit2D hit;
+
+        hit = Physics2D.Raycast(transform.position, facing, step, LayerMask.GetMask("Parede"));
+        if (hit.transform.tag == "Interativo")
+            hit.transform.GetComponent<Interativo>().Interagir();
     }
 
     /// <summary>
@@ -105,29 +145,45 @@ public class Player : MonoBehaviour
     /// </summary>
     void VerifyWalkingInput()
     {
-        if (validDirections["left"] && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            direction = Vector3.left * step;
-            isWalking = true;
-            Debug.Log("left");
+            facing = Vector3.left;
+            if (validDirections["left"])
+            {
+                direction = Vector3.left * step;
+                isWalking = true;
+                Debug.Log("left");
+            }
         }
-        else if (validDirections["right"] && Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            direction = Vector3.right * step;
-            isWalking = true;
-            Debug.Log("right");
+            facing = Vector3.right;
+            if (validDirections["right"])
+            {
+                direction = Vector3.right * step;
+                isWalking = true;
+                Debug.Log("right");
+            }
         }
-        else if (validDirections["up"] && Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.W))
         {
-            direction = Vector3.up * step;
-            isWalking = true;
-            Debug.Log("up");
+            facing = Vector3.up;
+            if (validDirections["up"])
+            {
+                direction = Vector3.up * step;
+                isWalking = true;
+                Debug.Log("up");
+            }
         }
-        else if (validDirections["down"] && Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
-            direction = Vector3.down * step;
-            isWalking = true;
-            Debug.Log("down");
+            facing = Vector3.down;
+            if (validDirections["down"])
+            {
+                direction = Vector3.down * step;
+                isWalking = true;
+                Debug.Log("down");
+            }
         }
         else
         {
