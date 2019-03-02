@@ -43,47 +43,48 @@ public class Player : MonoBehaviour
     {
         RaycastAtDirections();
 
-        direction.x = (validDirections["left"] && Input.GetKeyDown(KeyCode.A) ? -1f : 0f)
-                    + (validDirections["right"] && Input.GetKeyDown(KeyCode.D) ? 1f : 0f);
-        direction.y = (validDirections["down"] && Input.GetKeyDown(KeyCode.S) ? -1f : 0f)
-                    + (validDirections["up"] && Input.GetKeyDown(KeyCode.W) ? 1f : 0f);
+        //direction.x = (validDirections["left"] && Input.GetKeyDown(KeyCode.A) ? -1f : 0f)
+        //            + (validDirections["right"] && Input.GetKeyDown(KeyCode.D) ? 1f : 0f);
+        //direction.y = (validDirections["down"] && Input.GetKeyDown(KeyCode.S) ? -1f : 0f)
+        //            + (validDirections["up"] && Input.GetKeyDown(KeyCode.W) ? 1f : 0f);
 
-        transform.position += direction;// * speed * Time.deltaTime;
-        //if (!isWalking)
-        //{
-        //    if (Input.GetKey(KeyCode.A))
-        //    {
-        //        direction = Vector3.left;
-        //        isWalking = true;
-        //        Debug.Log("left");
-        //    }
-        //    else if (Input.GetKey(KeyCode.D))
-        //    {
-        //        direction = Vector3.right;
-        //        isWalking = true;
-        //        Debug.Log("right");
-        //    }
-        //    else if (Input.GetKey(KeyCode.W))
-        //    {
-        //        direction = Vector3.up;
-        //        isWalking = true;
-        //        Debug.Log("up");
-        //    }
-        //    else if (Input.GetKey(KeyCode.S))
-        //    {
-        //        direction = Vector3.down;
-        //        isWalking = true;
-        //        Debug.Log("down");
-        //    }
-        //    else
-        //    {
-        //        direction = Vector3.zero;
-        //    }
+        //transform.position += direction;// * speed * Time.deltaTime;
 
-        //    endPoint = transform.position + direction;
-        //    if(isWalking)
-        //        walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
-        //}
+        if (!isWalking)
+        {
+            if (validDirections["left"] && Input.GetKey(KeyCode.A))
+            {
+                direction = Vector3.left;
+                isWalking = true;
+                Debug.Log("left");
+            }
+            else if (validDirections["right"] && Input.GetKey(KeyCode.D))
+            {
+                direction = Vector3.right;
+                isWalking = true;
+                Debug.Log("right");
+            }
+            else if (validDirections["up"] && Input.GetKey(KeyCode.W))
+            {
+                direction = Vector3.up;
+                isWalking = true;
+                Debug.Log("up");
+            }
+            else if (validDirections["down"] && Input.GetKey(KeyCode.S))
+            {
+                direction = Vector3.down;
+                isWalking = true;
+                Debug.Log("down");
+            }
+            else
+            {
+                direction = Vector3.zero;
+            }
+
+            endPoint = transform.position + direction;
+            if (isWalking)
+                walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
+        }
     }
 
     IEnumerator Movement(Vector3 startPosition, Vector3 endPosition)
