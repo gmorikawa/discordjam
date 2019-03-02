@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [Header("Atributos")]
     public float speed = 7.5f;
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 
         InitValidDirectionsDictionary();
     }
-
+    
     void Update()
     {
         RaycastAtDirections();
@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
             endPoint = transform.position + direction;
             if (isWalking)
                 walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
-        } else
+        }
+        else
         {
         }
     }
@@ -56,7 +57,8 @@ public class Player : MonoBehaviour
     IEnumerator<float> Movement(Vector3 startPosition, Vector3 endPosition)
     {
         float i = 0f;
-        while(i < 1f) {
+        while (i < 1f)
+        {
             i += Time.deltaTime * speed;
             transform.position = Vector3.Lerp(startPosition, endPosition, i);
             yield return i;
@@ -105,37 +107,86 @@ public class Player : MonoBehaviour
     /// </summary>
     void VerifyWalkingInput()
     {
-        if (validDirections["left"] && Input.GetKey(KeyCode.A))
+        int value = Random.Range(0, 4);
+        switch(value)
         {
-            direction = Vector3.left * step;
-            isWalking = true;
-            Debug.Log("left");
-        }
-        else if (validDirections["right"] && Input.GetKey(KeyCode.D))
-        {
-            direction = Vector3.right * step;
-            isWalking = true;
-            Debug.Log("right");
-        }
-        else if (validDirections["up"] && Input.GetKey(KeyCode.W))
-        {
-            direction = Vector3.up * step;
-            isWalking = true;
-            Debug.Log("up");
-        }
-        else if (validDirections["down"] && Input.GetKey(KeyCode.S))
-        {
-            direction = Vector3.down * step;
-            isWalking = true;
-            Debug.Log("down");
-        }
-        else
-        {
-            direction = Vector3.zero;
+            case 0:
+                if (validDirections["left"])
+                {
+                    direction = Vector3.left * step;
+                    isWalking = true;
+                    Debug.Log("left");
+                } else
+                {
+                    direction = Vector3.zero;
+                }
+                break;
+            case 1:
+                if (validDirections["right"])
+                {
+                    direction = Vector3.right * step;
+                    isWalking = true;
+                    Debug.Log("right");
+                } else
+                {
+                    direction = Vector3.zero;
+                }
+                break;
+            case 2:
+                if (validDirections["up"])
+                {
+                    direction = Vector3.up * step;
+                    isWalking = true;
+                    Debug.Log("up");
+                } else
+                {
+                    direction = Vector3.zero;
+                }
+                break;
+            case 3:
+                if (validDirections["down"])
+                {
+                    direction = Vector3.down * step;
+                    isWalking = true;
+                    Debug.Log("down");
+                } else
+                {
+                    direction = Vector3.zero;
+                }
+                break;
         }
 
+        //if (validDirections["left"])
+        //{
+        //    direction = Vector3.left * step;
+        //    isWalking = true;
+        //    Debug.Log("left");
+        //}
+        //else if (validDirections["right"])
+        //{
+        //    direction = Vector3.right * step;
+        //    isWalking = true;
+        //    Debug.Log("right");
+        //}
+        //else if (validDirections["up"])
+        //{
+        //    direction = Vector3.up * step;
+        //    isWalking = true;
+        //    Debug.Log("up");
+        //}
+        //else if (validDirections["down"])
+        //{
+        //    direction = Vector3.down * step;
+        //    isWalking = true;
+        //    Debug.Log("down");
+        //}
+        //else
+        //{
+        //    direction = Vector3.zero;
+        //}
+
         animator.SetBool("isWalking", isWalking);
-        if(direction != Vector3.zero)
+        if (direction != Vector3.zero)
         {
             animator.SetFloat("dirX", direction.x);
             animator.SetFloat("dirY", direction.y);
