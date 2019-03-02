@@ -8,11 +8,5 @@ public class Interativo : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Parede");
     }
 
-    public void Interagir()
-    {
-        ///
-        /// Colocar lógica para interação com o baú
-        ///
-        Destroy(gameObject);
-    }
+    public virtual void Interagir() { }
 }
