@@ -12,7 +12,7 @@ public class Bau : Interativo
                 GameObject chave = new GameObject("Chave");
                 chave.transform.parent = player.transform;
 
-                player.items[i] = chave.GetComponent<Key>();
+                player.items[i] = chave.AddComponent<Key>();
                 Destroy(this);
                 return;
             }

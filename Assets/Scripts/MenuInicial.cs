@@ -3,16 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuInicial : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-    
-    void Update()
-    {
-        
-    }
-
     public void Play()
     {
         SceneManager.LoadScene("Cenario1");

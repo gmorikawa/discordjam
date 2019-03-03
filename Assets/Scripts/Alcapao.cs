@@ -5,15 +5,16 @@ public class Alcapao : Interativo
     public override void Interagir()
     {
         Player player = GameObject.FindObjectOfType<Player>();
-        foreach(Item item in player.items)
+        for(int i = 0; i < player.items.Length; i++)
         {
-            if(item != null && item.GetType() == typeof(Key))
+            if(player.items[i] != null && player.items[i].GetType() == typeof(Key))
             {
                 Debug.Log("abrido");
-            } else
-            {
-                Debug.Log("nao tem chave");
+                player.items[i] = null;
+                return;
             }
         }
+
+        Debug.Log("nao tem chave");
     }
 }

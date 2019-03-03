@@ -44,11 +44,7 @@ public class Player : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
 
         endPoint = new Vector3();
-
-        GameObject t = new GameObject("Chave");
         
-        items[0] = t.AddComponent<Key>();
-
         InitValidDirectionsDictionary();
     }
 
