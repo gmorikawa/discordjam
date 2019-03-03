@@ -20,11 +20,11 @@ public class MenuInicial : MonoBehaviour
 
     public void HoverEffect(Transform button)
     {
-        button.localScale = new Vector3(1.2f, 1.2f);
+        button.localScale = new Vector3(0.9f, 0.9f);
     }
 
     public void UnhoverEffect(Transform button)
     {
-        button.localScale = new Vector3(1f, 1f);
+        button.localScale = new Vector3(0.8f, 0.8f);
     }
 }
