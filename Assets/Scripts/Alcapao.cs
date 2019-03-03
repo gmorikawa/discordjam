@@ -38,7 +38,7 @@ public class Alcapao : Interativo
         yield return StartCoroutine(LoaderManager.Instance.FadeOut());
         player.position = nextPoint.position;
         player.gameObject.SetActive(true);
-        player.GetComponent<Player>().isWalking = false;
+        player.GetComponent<Player>().StopWalking();
         yield return StartCoroutine(LoaderManager.Instance.FadeIn());
     }
 }

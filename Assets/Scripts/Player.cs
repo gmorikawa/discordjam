@@ -77,6 +77,13 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StopWalking()
+    {
+        if (walkingRoutine != null)
+            StopCoroutine(walkingRoutine);
+        isWalking = false;
+    }
+
     public void Restart()
     {
         SlotKey.SetActive(false);
@@ -99,13 +106,13 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator<float> Movement(Vector3 startPosition, Vector3 endPosition)
+    IEnumerator Movement(Vector3 startPosition, Vector3 endPosition)
     {
         float i = 0f;
         while(i < 1f) {
             i += Time.deltaTime * speed;
             transform.position = Vector3.Lerp(startPosition, endPosition, i);
-            yield return i;
+            yield return null;
         }
         isWalking = false;
     }
