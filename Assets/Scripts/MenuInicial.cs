@@ -5,17 +5,22 @@ public class MenuInicial : MonoBehaviour
 {
     public void Play()
     {
-        SceneManager.LoadScene("Cenario1");
+        LoaderManager.Instance.LoadScene("Cenario1");
     }
 
     public void Credits()
     {
-        SceneManager.LoadScene("Credits");
+        LoaderManager.Instance.LoadScene("Credits");
     }
 
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void CreditsToMenu()
+    {
+        LoaderManager.Instance.LoadScene("Menu");
     }
 
     public void HoverEffect(Transform button)
