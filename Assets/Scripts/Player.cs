@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public bool isWalking = false;
     public bool isDead = false;
 
+    [Header("UI")]
+    public GameObject GameOverScreen;
+
     private Dictionary<string, bool> validDirections;
     private Vector3 direction;
     private Vector3 facing;
@@ -82,6 +85,7 @@ public class Player : MonoBehaviour
         ///
         /// Lógica para player morrendo
         ///
+        GameOverScreen.SetActive(true);
         Destroy(gameObject);
     }
 
