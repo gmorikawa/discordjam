@@ -97,10 +97,8 @@ public class Player : MonoBehaviour
     }
 
     void InteractWith() {
-        RaycastHit2D hit;
-
-        hit = Physics2D.Raycast(transform.position, facing, step, LayerMask.GetMask("Parede"));
-        if (hit.transform.tag == "Interativo")
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, facing, step, LayerMask.GetMask("Parede"));
+        if (hit && hit.transform.tag == "Interativo")
             hit.transform.GetComponent<Interativo>().Interagir();
     }
 
@@ -125,19 +123,15 @@ public class Player : MonoBehaviour
 
         hit = Physics2D.Raycast(transform.position, Vector2.right, step, LayerMask.GetMask("Parede"));
         validDirections["right"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: right");
 
         hit = Physics2D.Raycast(transform.position, Vector2.left, step, LayerMask.GetMask("Parede"));
         validDirections["left"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: left");
 
         hit = Physics2D.Raycast(transform.position, Vector2.up, step, LayerMask.GetMask("Parede"));
         validDirections["up"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: up");
 
         hit = Physics2D.Raycast(transform.position, Vector2.down, step, LayerMask.GetMask("Parede"));
         validDirections["down"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: down");
     }
 
     /// <summary>
@@ -152,7 +146,6 @@ public class Player : MonoBehaviour
             {
                 direction = Vector3.left * step;
                 isWalking = true;
-                //Debug.Log("left");
             }
         }
         else if (Input.GetKey(KeyCode.D))
@@ -162,7 +155,6 @@ public class Player : MonoBehaviour
             {
                 direction = Vector3.right * step;
                 isWalking = true;
-                //Debug.Log("right");
             }
         }
         else if (Input.GetKey(KeyCode.W))
@@ -172,7 +164,6 @@ public class Player : MonoBehaviour
             {
                 direction = Vector3.up * step;
                 isWalking = true;
-                //Debug.Log("up");
             }
         }
         else if (Input.GetKey(KeyCode.S))
@@ -182,7 +173,6 @@ public class Player : MonoBehaviour
             {
                 direction = Vector3.down * step;
                 isWalking = true;
-                //Debug.Log("down");
             }
         }
         else

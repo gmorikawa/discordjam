@@ -19,4 +19,12 @@ public class Alcapao : Interativo
 
         Debug.Log("nao tem chave");
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            collision.gameObject.SetActive(false);
+        }
+    }
 }

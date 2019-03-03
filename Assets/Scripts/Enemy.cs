@@ -102,19 +102,15 @@ public class Enemy : MonoBehaviour
 
         hit = Physics2D.Raycast(transform.position, Vector2.right, step, LayerMask.GetMask("Parede"));
         validDirections["right"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: right");
 
         hit = Physics2D.Raycast(transform.position, Vector2.left, step, LayerMask.GetMask("Parede"));
         validDirections["left"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: left");
 
         hit = Physics2D.Raycast(transform.position, Vector2.up, step, LayerMask.GetMask("Parede"));
         validDirections["up"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: up");
 
         hit = Physics2D.Raycast(transform.position, Vector2.down, step, LayerMask.GetMask("Parede"));
         validDirections["down"] = hit.collider == null;
-        //if (hit.collider != null) Debug.Log("Parede: down");
     }
 
     /// <summary>
@@ -145,7 +141,6 @@ public class Enemy : MonoBehaviour
                     {
                         direction = Vector3.left * step;
                         isWalking = true;
-                        //Debug.Log("left");
                     }
                     else
                     {
@@ -157,7 +152,6 @@ public class Enemy : MonoBehaviour
                     {
                         direction = Vector3.right * step;
                         isWalking = true;
-                        //Debug.Log("right");
                     }
                     else
                     {
@@ -169,7 +163,6 @@ public class Enemy : MonoBehaviour
                     {
                         direction = Vector3.up * step;
                         isWalking = true;
-                        //Debug.Log("up");
                     }
                     else
                     {
@@ -181,7 +174,6 @@ public class Enemy : MonoBehaviour
                     {
                         direction = Vector3.down * step;
                         isWalking = true;
-                        //Debug.Log("down");
                     }
                     else
                     {
@@ -192,15 +184,14 @@ public class Enemy : MonoBehaviour
         } else
         {
             isWalking = true;
-            // Debug.Log(direction);
         }
 
         animator.SetBool("isWalking", isWalking);
         if (direction != Vector3.zero)
         {
             facing = direction;
-            //animator.SetFloat("dirX", direction.x);
-            //animator.SetFloat("dirY", direction.y);
+            animator.SetFloat("dirX", direction.x);
+            animator.SetFloat("dirY", direction.y);
         }
     }
 }
