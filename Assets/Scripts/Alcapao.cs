@@ -11,6 +11,8 @@ public class Alcapao : Interativo
             {
                 Debug.Log("abrido");
                 player.items[i] = null;
+                GetComponent<Animator>().SetTrigger("Open");
+                gameObject.layer = LayerMask.NameToLayer("Default");
                 return;
             }
         }

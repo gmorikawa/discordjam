@@ -13,6 +13,9 @@ public class Bau : Interativo
                 chave.transform.parent = player.transform;
 
                 player.items[i] = chave.AddComponent<Key>();
+
+                GetComponent<Animator>().SetTrigger("Open");
+
                 Destroy(this);
                 return;
             }
