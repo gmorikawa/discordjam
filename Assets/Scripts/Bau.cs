@@ -15,6 +15,7 @@ public class Bau : Interativo
                 player.items[i] = chave.AddComponent<Key>();
 
                 GetComponent<Animator>().SetTrigger("Open");
+                player.SlotKey.SetActive(true);
 
                 Destroy(this);
                 return;

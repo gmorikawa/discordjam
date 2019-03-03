@@ -13,6 +13,7 @@ public class Alcapao : Interativo
                 player.items[i] = null;
                 GetComponent<Animator>().SetTrigger("Open");
                 gameObject.layer = LayerMask.NameToLayer("Default");
+                player.SlotKey.SetActive(false);
                 return;
             }
         }

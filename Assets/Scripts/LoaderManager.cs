@@ -8,6 +8,7 @@ public class LoaderManager : MonoBehaviour
     public Image fadeImage;
     public string startScene;
     public float fadeSpeed = 1f;
+    public SoundEffects soundEffects;
     private string currentScene = null;
 
     public Camera cam;
@@ -19,6 +20,7 @@ public class LoaderManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        soundEffects.StopGenerating();
         StartCoroutine(Loading(sceneName));
     }
     
@@ -36,6 +38,9 @@ public class LoaderManager : MonoBehaviour
 
         currentScene = sceneName;
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentScene));
+
+        if (currentScene == "Cenario1")
+            soundEffects.StartGenerating();
 
         yield return StartCoroutine(FadeIn());
     }

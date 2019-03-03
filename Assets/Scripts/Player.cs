@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
 
     [Header("UI")]
     public GameObject GameOverScreen;
+    public GameObject SlotKey;
+    public GameObject SlotFlashlight;
 
     private Dictionary<string, bool> validDirections;
     private Vector3 direction;
@@ -49,8 +52,9 @@ public class Player : MonoBehaviour
         endPoint = new Vector3();
         
         InitValidDirectionsDictionary();
+        Restart();
     }
-
+    
     void Update()
     {
         if(!isDead)
@@ -71,6 +75,12 @@ public class Player : MonoBehaviour
                     walkingRoutine = StartCoroutine(Movement(transform.position, endPoint));
             }
         }
+    }
+
+    public void Restart()
+    {
+        SlotKey.SetActive(false);
+        SlotFlashlight.SetActive(false);
     }
 
     public void SetGameOver()
