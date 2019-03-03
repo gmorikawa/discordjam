@@ -45,7 +45,7 @@ public class LoaderManager : MonoBehaviour
         yield return StartCoroutine(FadeIn());
     }
 
-    IEnumerator FadeOut()
+    public IEnumerator FadeOut()
     {
         float i = 0f;
         while(i < 1f)
@@ -56,7 +56,7 @@ public class LoaderManager : MonoBehaviour
         }
     }
 
-    IEnumerator FadeIn()
+    public IEnumerator FadeIn()
     {
         float i = 0f;
         while (i < 1f)
